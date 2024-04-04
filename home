@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+		<title>Earthquake_Home_Page</title>	
+	</head>
+  
+	<body>
+		<h1>About the Earthquake Data</h1>
+		<p>The data in this informational website is from Corgis Data Set Project. It can be found 
+			<a href = "https://think.cs.vt.edu/corgis/json/earthquakes/">here</a>.
+			The data contains statistics about new earthquakes over a month of time. presumably around the date 6/7/16
+		</p>
+		<p></p>
+		<p>The confusing data units here are magnitude, epoche, gap and significance. Magnitude is the strength of the earth quake and for this data is measured on the 
+		Richter Scale. The Richter scale is a scale based on the logarithm of the amplitude of the waves an earthquake makes on a seismograph (a machine that
+		measures the strength of an earthquake. Each whole number the scale goes up is a power of ten hgiher than the previous number maxing out at 10.0 for earth.
+		 <a href = "https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity">(source)</a>
+		</p><p>
+		<p>Epoch is the amount of seconds elapsed since a certain date (January 1st, 1970). Gap is the predicted location accuracy of the earthquake and is measured 
+		in degrees. Gap is found by finding the largest angle from the earthquake epicenter from one seismic station to another (again around the epicenter).
+		<a href = "https://www.researchgate.net/figure/Azimuthal-gap-An-earthquake-epicenter-is-denoted-by-star-seismic-stations-by-triangles_fig15_284086572#:~:text=The%20azimuthal%20gap%2C%20a%20proxy,%5D%5B57%5D%20.%20...&text=Jun%20Nishijima-,Continuous%20seismic%20monitoring%20could%20play%20a,in%20deep%20geothermal%20energy%20exploration.">(Source)</a>
+		 Significance is the how significant the earthquake is on a scale from 0 to 1000 with the higher the number the more significant the quake. This is 
+		 determined by a number of different factors such as magnitude, felt reports, maximun MMI (more or less shaking intensity
+		 [<a href = "https://abag.ca.gov/sites/default/files/making_sense_of_the_modified_mercalli_intensity_scale.pdf">Learn More</a>]), 
+		 and impact (effect on environment <a href = "https://www.nature.com/articles/s41467-022-35418-8#:~:text=Moderate%2Dto%2Dlarge%20earthquakes%20are,and%20disruption%20to%20lifelines1.">Learn More</a>).
+		<a href = "https://www.nature.com/articles/096566a0">(Source)</a>
+	</body>
+</html>

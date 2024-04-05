@@ -6,6 +6,13 @@
 
 {% block content %}
     <!--page content-->
-    <h1>Page 1</h1>
-	<p>This is my first web page<p>
+    <h1>Highest Magnitude Earthquakes</h1>
+	<h2>Pick a location</h2>
+	<form action="/showFact">
+        <select name="state"> <!-- add onchange="this.form.submit()" to submit/update the form when an option is selected.  Usefull for then displaying county options. -->
+			{{ location_options }}
+        </select>
+        <br><br>
+        <input type="submit" value="Get a fun fact!">
+    </form>
 {% endblock %}

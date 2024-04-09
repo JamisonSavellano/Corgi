@@ -14,6 +14,11 @@ def render_main():
 def render_page1():
     quakes = get_quake_options()
     return render_template('page1.html', location_options = quakes)
+    
+@app.route("/p2")
+def render_page2():
+    quakes = get_month_options()
+    return render_template('page2.html', month_options = quakes)
 
 @app.route('/showFact')
 def render_fact():
@@ -24,8 +29,22 @@ def render_fact():
     for a in quakeFacts:
         if a["location"]["full"] == state:
             inputVar.append(a)
-    info = "This is magnitude " + inputVar["impact"]["magnitude"] + " earthquake and a significance of " + inputVar["impact"]["significance"] + ". It has a gap of" + inputVar["impact"]["gap"] + ". It had a depth of " + inputVar["location"]["magnitude"] + " and was located at a latitude of" + inputVar["location"]["latitude"] + " and a longitude of " + inputVar["location"]["longitude"] + ". It happened on " + inputVar["time"]["month"] + "/" + inputVar["time"]["day"] + "/" + inputVar["time"]["year"] + " at " + inputVar["time"]["hour"] + ":" + inputVar["time"]["minute"] + "O'clock."
+    info = ""
+    info = "This is magnitude " + str(inputVar[0]["impact"]["magnitude"]) + " earthquake and a significance of " + str(inputVar[0]["impact"]["significance"]) + ". It has a gap of " + str(inputVar[0]["impact"]["gap"]) + ". It had a depth of " + str(inputVar[0]["location"]["depth"]) + " and was located at a latitude of " + str(inputVar[0]["location"]["latitude"]) + " and a longitude of " + str(inputVar[0]["location"]["longitude"]) + ". It happened on " + str(inputVar[0]["time"]["month"]) + "/" + str(inputVar[0]["time"]["day"]) + "/" + str(inputVar[0]["time"]["year"]) + " at " + str(inputVar[0]["time"]["hour"]) + ":" + str(inputVar[0]["time"]["minute"]) + "O'clock."
     return render_template('page1.html', location_options = quakes, info = info) 
+    
+    
+@app.route('/showFact2')
+def render_fact2():
+    quakes = get_month_options()
+    quakeFacts = get_quake_list()
+    state = request.args["state"]
+    inputVar = []
+    for a in quakeFacts:
+        if int(a["time"]["month"]) == int(state):
+            inputVar.append(a)
+    print(inputVar)
+    return render_template('page2.html', month_options = quakes) 
 
 def get_quake_list():
     """Return the html code for the drop down menu.  Each option is a state abbreviation from the demographic data."""
@@ -43,6 +62,24 @@ def get_quake_options():
     options=""
     for s in quakes_loc:
         options += Markup("<option value=\"" + s + "\">" + s + "</option>") #Use Markup so <, >, " are not escaped lt, gt, etc.
+    return options
+    
+def get_month_options():
+    """Return the html code for the drop down menu.  Each option is a state abbreviation from the demographic data."""
+    with open('earthquakes.json') as earthquakes_data:
+        data = json.load(earthquakes_data)
+    quakes_month = []
+    m = []
+    for a in data:
+        quakes_month.append(a["time"]["month"])
+        m.append(a["time"]["month"])
+    options=""
+    x = 0
+    for s in quakes_month:
+        x+=1
+        if m[x] != s:
+            m.append(s)
+            options += Markup("<option value=\"" + str(s) + "\">" + str(s) + "</option>") #Use Markup so <, >, " are not escaped lt, gt, etc.
     return options
     
 if __name__=="__main__":

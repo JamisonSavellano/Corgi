@@ -43,8 +43,20 @@ def render_fact2():
     for a in quakeFacts:
         if int(a["time"]["month"]) == int(state):
             inputVar.append(a)
-    print(inputVar)
-    return render_template('page2.html', month_options = quakes) 
+    options = Organize_dates(inputVar)
+    return render_template('Graph1.html', month_options = quakes, options = options, quakes = quakeFacts)
+
+def Organize_dates(data):
+    Orangized = []
+    preOrganized = []
+    for d in data:
+        preOrganized.append(d["time"]["year"])
+        preOrganized.append(d["time"]["month"])
+        preOrganized.append(d["time"]["day"])
+        Orangized.append(preOrganized)
+        preOrganized = []
+    return Orangized
+    
 
 def get_quake_list():
     """Return the html code for the drop down menu.  Each option is a state abbreviation from the demographic data."""

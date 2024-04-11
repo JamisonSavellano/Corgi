@@ -39,12 +39,14 @@ def render_fact2():
     quakes = get_month_options()
     quakeFacts = get_quake_list()
     state = request.args["state"]
+    mags = get_mag(int(state))
     inputVar = []
     for a in quakeFacts:
         if int(a["time"]["month"]) == int(state):
             inputVar.append(a)
     options = Organize_dates(inputVar)
-    return render_template('Graph1.html', month_options = quakes, options = options, quakes = quakeFacts)
+    newData = get_graph(options, mags)
+    return render_template('Graph1.html', month_options = quakes, newData = newData, mags = mags)
 
 def Organize_dates(data):
     Orangized = []
@@ -57,6 +59,24 @@ def Organize_dates(data):
         preOrganized = []
     return Orangized
     
+def get_mag(data):
+    mag = []
+    temp = get_quake_list()
+    for d in temp:
+        if d["time"]["month"] == data:
+            mag.append(d["impact"]["magnitude"])
+    return mag
+    
+def get_graph(option, mag):
+	mags = mag
+	options = option
+	temp = 0.0
+	x = 0
+	for a in options:
+		temp = mags[x]
+		newData.append(["x" : Date(a),"y" : temp])
+		x = x + 1
+    return newData
 
 def get_quake_list():
     """Return the html code for the drop down menu.  Each option is a state abbreviation from the demographic data."""

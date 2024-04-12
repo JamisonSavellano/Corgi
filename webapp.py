@@ -46,7 +46,8 @@ def render_fact2():
             inputVar.append(a)
     options = Organize_dates(inputVar)
     newData = get_graph(options, mags)
-    return render_template('Graph1.html', month_options = quakes, newData = newData, mags = mags)
+    lenght = newData.length
+    return render_template('Graph1.html', month_options = quakes, newData = newData, mags = mags, length = length)
 
 def Organize_dates(data):
     Orangized = []
@@ -68,14 +69,15 @@ def get_mag(data):
     return mag
     
 def get_graph(option, mag):
-	mags = mag
-	options = option
-	temp = 0.0
-	x = 0
-	for a in options:
-		temp = mags[x]
-		newData.append(["x" : Date(a),"y" : temp])
-		x = x + 1
+    mags = mag
+    options = option
+    newData = []
+    temp = 0.0
+    z = 0
+    for a in options:
+        temp = mags[z]
+        newData.append({"x": a, "y": temp})
+        z += 1
     return newData
 
 def get_quake_list():

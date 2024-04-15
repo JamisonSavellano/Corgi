@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Earthquake graph1</title>
+	
+	</head>
+	<body>
+	<h1>Earthquak Magnitude Chart</h1>
+	
+	
+<script>
+window.onload = function () {
+
+var d = {}
+for (int i = 0; i <{{ newData.length }}; i++){
+	d.append(x : new date({{ newData[i] }}),y : {{ mags[i] }})
+}
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Daily High Temperature at Different Beaches"
+	},
+	axisX: {
+		valueFormatString: "DD MMM,YY"
+	},
+	axisY: {
+		title: "Temperature (in °C)",
+		suffix: " °C"
+	},
+	legend:{
+		cursor: "pointer",
+		fontSize: 16,
+		itemclick: toggleDataSeries
+	},
+	toolTip:{
+		shared: true
+	},
+	data: [{
+		name: "Myrtle Beach",
+		type: "spline",
+		yValueFormatString: "#0.## °C",
+		showInLegend: true,
+		dataPoints: d
+	}]
+});
+chart.render();
+
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	}
+	else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+}
+
+}
+</script>
+	
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+	
+	</body>
+</html>

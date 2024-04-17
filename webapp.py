@@ -39,15 +39,16 @@ def render_fact2():
     quakes = get_month_options()
     quakeFacts = get_quake_list()
     state = request.args["state"]
-    mags = get_mag(int(state))
+    mags1 = get_mag(int(state))
     inputVar = []
-    v = 0
+    v1 = 0
     for a in quakeFacts:
         if int(a["time"]["month"]) == int(state):
             inputVar.append(a)
     options = Organize_dates(inputVar)
-    newData = get_graph(options, mags)
-    return render_template('Graph1.html', month_options = quakes, newData = newData, mags = mags, v = v)
+    newData1 = get_graph(options, mags1)
+    print(newData1)
+    return render_template('Graph1.html', month_options = quakes, newData = newData1, mags = mags1, v = v1)
 
 def Organize_dates(data):
     Orangized = []

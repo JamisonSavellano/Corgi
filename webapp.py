@@ -61,6 +61,23 @@ def Organize_dates(data):
         preOrganized = []
     return Orangized
     
+def get_avg_mag(data, mag):
+    mags = []
+    x = get_quake_list[0]["time"]["day"]
+    y = 0
+    z = 0
+    for e in data:
+        if e["time"]["day"] == x
+            y += e["impact"]["magnitude"]
+            z += 1
+        else
+            x += 1
+            y = y/z
+            mags.append(y)
+            y = e["impact"]["magnitude"]
+    return mags
+    
+    
 def get_mag(data):
     mag = []
     temp = get_quake_list()

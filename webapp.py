@@ -46,35 +46,52 @@ def render_fact2():
         if int(a["time"]["month"]) == int(state):
             inputVar.append(a)
     options = Organize_dates(inputVar)
-    newData1 = get_graph(options, mags1)
+    newData1 = get_avg_mag(quakeFacts, options)
     print(newData1)
     return render_template('Graph1.html', month_options = quakes, newData = newData1, mags = mags1, v = v1)
 
 def Organize_dates(data):
     Orangized = []
     preOrganized = []
+    a = data[0]["time"]["day"]
+    preOrganized.append(data[0]["time"]["year"])
+    preOrganized.append(data[0]["time"]["month"])
+    preOrganized.append(a)
+    Orangized.append(preOrganized)
+    preOrganized = []
     for d in data:
-        preOrganized.append(d["time"]["year"])
-        preOrganized.append(d["time"]["month"])
-        preOrganized.append(d["time"]["day"])
-        Orangized.append(preOrganized)
-        preOrganized = []
+        if d["time"]["day"] != a:
+            preOrganized.append(d["time"]["year"])
+            preOrganized.append(d["time"]["month"])
+            preOrganized.append(d["time"]["day"])
+            Orangized.append(preOrganized)
+            preOrganized = []
     return Orangized
     
-def get_avg_mag(data, mag):
+def get_avg_mag(data, dates):
     mags = []
-    x = get_quake_list[0]["time"]["day"]
+    x = data[0]["time"]["day"]
     y = 0
-    z = 0
+    z = 1
+    f = 1
+    g = 0
     for e in data:
-        if e["time"]["day"] == x
+        if e["time"]["day"] == x and len(data) != f:
             y += e["impact"]["magnitude"]
             z += 1
-        else
-            x += 1
+            f += 1
+        elif len(data) == f:
+            z += 1
             y = y/z
-            mags.append(y)
+            mags.append({dates[g], y})
+        else:
+            x += 1
+            y =  y/z
+            mags.append([dates[g], y])
             y = e["impact"]["magnitude"]
+            z = 1
+            f += 1
+            g += 1
     return mags
     
     
@@ -136,5 +153,3 @@ def get_month_options():
     
 if __name__=="__main__":
     app.run(debug=True)
-    
-    

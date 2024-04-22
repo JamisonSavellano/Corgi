@@ -41,57 +41,71 @@ def render_fact2():
     state = request.args["state"]
     mags1 = get_mag(int(state))
     inputVar = []
+
     v1 = 0
     for a in quakeFacts:
         if int(a["time"]["month"]) == int(state):
             inputVar.append(a)
-    options = Organize_dates(inputVar)
-    newData1 = get_avg_mag(quakeFacts, options)
+    options = Organize_dates(inputVar, int(state))
+    newData1 = get_avg_mag(quakeFacts, options, int(state))
     print(newData1)
     return render_template('Graph1.html', month_options = quakes, newData = newData1, mags = mags1, v = v1)
 
-def Organize_dates(data):
+def Organize_dates(data, month):
     Orangized = []
     preOrganized = []
-    a = data[0]["time"]["day"]
+    x = 1
+    if month == 7:
+        x = data[0]["time"]["day"]
+    else:
+        x == data[1497]["time"]["day"]
     preOrganized.append(data[0]["time"]["year"])
     preOrganized.append(data[0]["time"]["month"])
-    preOrganized.append(a)
+    preOrganized.append(x)
     Orangized.append(preOrganized)
     preOrganized = []
     for d in data:
-        if d["time"]["day"] != a:
+        if d["time"]["day"] != x:
             preOrganized.append(d["time"]["year"])
             preOrganized.append(d["time"]["month"])
             preOrganized.append(d["time"]["day"])
             Orangized.append(preOrganized)
+            print(preOrganized)
+            x = d["time"]["day"]
             preOrganized = []
     return Orangized
     
-def get_avg_mag(data, dates):
+def get_avg_mag(data, dates, month):
     mags = []
-    x = data[0]["time"]["day"]
+    x = 1
+    if month == 7:
+        x = data[0]["time"]["day"]
+    else:
+        x == data[1497]["time"]["day"]
+        #else statement should work but does not for some reason. Starting with x = 1 is a workaround
     y = 0
     z = 1
     f = 1
     g = 0
     for e in data:
-        if e["time"]["day"] == x and len(data) != f:
-            y += e["impact"]["magnitude"]
-            z += 1
-            f += 1
-        elif len(data) == f:
-            z += 1
-            y = y/z
-            mags.append({dates[g], y})
-        else:
-            x += 1
-            y =  y/z
-            mags.append([dates[g], y])
-            y = e["impact"]["magnitude"]
-            z = 1
-            f += 1
-            g += 1
+        if e["time"]["month"] == month:
+            if e["time"]["day"] == x and len(data) != f:
+                y += e["impact"]["magnitude"]
+                z += 1
+                f += 1
+            elif len(data) == f:
+                z += 1
+                y = y/z
+                mags.append({"x" : dates[g],"y" : y})
+            else:
+                x += 1
+                y =  y/z
+                print(g)
+                mags.append({"x" : dates[g],"y" : y})
+                y = e["impact"]["magnitude"]
+                z = 1
+                f += 1
+                g += 1
     return mags
     
     

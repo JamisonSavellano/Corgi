@@ -41,15 +41,19 @@ def render_fact2():
     state = request.args["state"]
     mags1 = get_mag(int(state))
     inputVar = []
-
-    v1 = 0
+    month = ""
+    if state == 7:
+        month = "July"
+    else:
+        month = "August"
     for a in quakeFacts:
         if int(a["time"]["month"]) == int(state):
             inputVar.append(a)
     options = Organize_dates(inputVar, int(state))
     newData1 = get_avg_mag(quakeFacts, options, int(state))
-    print(newData1)
-    return render_template('Graph1.html', month_options = quakes, newData = newData1, mags = mags1, v = v1)
+    newData1 = Organize_graph(newData1)
+    print(month)
+    return render_template('Graph1.html', month_options = quakes, newData = newData1, mags = mags1, month = month)
 
 def Organize_dates(data, month):
     Orangized = []
@@ -100,7 +104,6 @@ def get_avg_mag(data, dates, month):
             else:
                 x += 1
                 y =  y/z
-                print(g)
                 mags.append({"x" : dates[g],"y" : y})
                 y = e["impact"]["magnitude"]
                 z = 1
@@ -108,6 +111,12 @@ def get_avg_mag(data, dates, month):
                 g += 1
     return mags
     
+def Organize_graph(data):
+    graph = ""
+    for a in data:
+        graph = graph + Markup("{x: new Date(" + str(a["x"]) + "), y: " + str(a["y"]) + "}, ")
+    graph = graph[:-2]
+    return graph
     
 def get_mag(data):
     mag = []

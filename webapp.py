@@ -31,7 +31,7 @@ def render_fact():
             inputVar.append(a)
     info = ""
     info = "This is magnitude " + str(inputVar[0]["impact"]["magnitude"]) + " earthquake and a significance of " + str(inputVar[0]["impact"]["significance"]) + ". It has a gap of " + str(inputVar[0]["impact"]["gap"]) + ". It had a depth of " + str(inputVar[0]["location"]["depth"]) + " and was located at a latitude of " + str(inputVar[0]["location"]["latitude"]) + " and a longitude of " + str(inputVar[0]["location"]["longitude"]) + ". It happened on " + str(inputVar[0]["time"]["month"]) + "/" + str(inputVar[0]["time"]["day"]) + "/" + str(inputVar[0]["time"]["year"]) + " at " + str(inputVar[0]["time"]["hour"]) + ":" + str(inputVar[0]["time"]["minute"]) + " O'clock."
-    return render_template('page1.html', location_options = quakes, info = info) 
+    return render_template('page1.html', last_selected = state, location_options = quakes, info = info) 
     
     
 @app.route('/showFact2')
@@ -42,7 +42,7 @@ def render_fact2():
     mags1 = get_mag(int(state))
     inputVar = []
     month = ""
-    if state == 7:
+    if int(state) == 7:
         month = "July"
     else:
         month = "August"
@@ -52,7 +52,6 @@ def render_fact2():
     options = Organize_dates(inputVar, int(state))
     newData1 = get_avg_mag(quakeFacts, options, int(state))
     newData1 = Organize_graph(newData1)
-    print(month)
     return render_template('Graph1.html', month_options = quakes, newData = newData1, mags = mags1, month = month)
 
 def Organize_dates(data, month):
@@ -74,7 +73,6 @@ def Organize_dates(data, month):
             preOrganized.append(d["time"]["month"])
             preOrganized.append(d["time"]["day"])
             Orangized.append(preOrganized)
-            print(preOrganized)
             x = d["time"]["day"]
             preOrganized = []
     return Orangized

@@ -5,7 +5,7 @@
 	
 	</head>
 	<body>
-	<h1>Earthquak Magnitude Chart</h1>
+	<h1>Earthquake Magnitude Chart</h1>
 	
 	
 <script>
@@ -25,7 +25,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	},
 	axisY: {
 		title: "Average Earthquake Magnitude(in rhichter scale)",
-		suffix: " °C"
+		suffix: ""
 	},
 	legend:{
 		cursor: "pointer",
@@ -36,9 +36,9 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		shared: true
 	},
 	data: [{
-		name: "Day",
+		name: "{{ month }}",
 		type: "spline",
-		yValueFormatString: "#0.## °C",
+		yValueFormatString: "#0.## ",
 		showInLegend: true,
 		dataPoints: [
 			{{ newData }}

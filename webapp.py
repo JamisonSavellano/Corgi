@@ -31,7 +31,7 @@ def render_fact():
             inputVar.append(a)
     info = ""
     info = "This is magnitude " + str(inputVar[0]["impact"]["magnitude"]) + " earthquake and a significance of " + str(inputVar[0]["impact"]["significance"]) + ". It has a gap of " + str(inputVar[0]["impact"]["gap"]) + ". It had a depth of " + str(inputVar[0]["location"]["depth"]) + " and was located at a latitude of " + str(inputVar[0]["location"]["latitude"]) + " and a longitude of " + str(inputVar[0]["location"]["longitude"]) + ". It happened on " + str(inputVar[0]["time"]["month"]) + "/" + str(inputVar[0]["time"]["day"]) + "/" + str(inputVar[0]["time"]["year"]) + " at " + str(inputVar[0]["time"]["hour"]) + ":" + str(inputVar[0]["time"]["minute"]) + " O'clock."
-    return render_template('page1.html', last_selected = state, location_options = quakes, info = info) 
+    return render_template('page1.html', last_selected = state,  location_options = quakes, info = info) 
     
     
 @app.route('/showFact2')
